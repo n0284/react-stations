@@ -1,9 +1,11 @@
 // @ts-check
 
 import React, { useState, useEffect } from 'react';
+import BreedsSelect from './BreedsSelect';
 
 export const DogListContainer = () => {
-  const [breeds,setBreeds] = useState([]);
+  const [breeds,setBreeds] = useState('');
+  const [selectedBreed,setSelectedBreed] = useState('');
 
   useEffect(() => {
     fetch('https://dog.ceo/api/breeds/list/all')
@@ -15,12 +17,12 @@ export const DogListContainer = () => {
       console.log(breeds)
   },[]);
 
+  const onChange = (e) => {
+    setSelectedBreed(e.target.value);
+  }
+
   return (
-    <select name="breedsList">
-      {Object.values(breeds).map((breed) => (
-      <option value="item" key={breed}>{breed}</option>
-      ))}
-    </select>
+    <BreedsSelect breeds={breeds} onChangeBreed = {onChange}/>
   )
 }
 
